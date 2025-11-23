@@ -110,7 +110,7 @@ setTimeout(() => {
 
 // Typing text
 const typingElement = document.querySelector(".typing");
-const text = "Software Developer • Web Specialist";
+const text = "Software Developer • Frontend Specialist";
 let index = 0;
 
 function typeLetters() {
@@ -118,8 +118,61 @@ function typeLetters() {
   index++;
 
   if (index <= text.length) {
-    setTimeout(typeLetters, 100); // typing speed
+    setTimeout(typeLetters, 200); // typing speed
   }
 }
 
 setTimeout(typeLetters, 1500); // wait 1.5 sec before typing starts
+// get all faces element
+const faces = [];
+const face1 = document.getElementById("face1");
+const face2 = document.getElementById("face2");
+const face3 = document.getElementById("face3");
+const face4 = document.getElementById("face4");
+const face5 = document.getElementById("face5");
+const face6 = document.getElementById("face6");
+
+const cube = document.getElementById("cube");
+
+faces.push(face1, face2, face3, face4, face5, face6);
+
+// function CircularQueue(capacity) {
+//   this.faces = faces;
+//   this.queue = new Array(faces);
+//   this.front = 0;
+//   this.rear = -1;
+//   this.size = 0;
+// }
+// // Add element
+// enqueue(){
+//   if(this.isFull()){
+//     console.log("Queue is full")
+//     return false
+//   }
+
+//   // Move rear pointer circularly
+// this.rear = (this.rear + 1) % this.faces;
+// this.queue[this.rear] = [...faces];
+// this.size++;
+// return true
+// }
+
+// dequeue(){
+//   if(this.isEmpty()){
+//     console.log("Queue is empty");
+//     return null;
+//   }
+//   const removed = this.queue[this.front];
+//   this.queue[this.front] = undefined;
+
+//   // Move front pointer circularly
+//   this.front = (this.front + 1) % this.capacity;
+//   this.size--;
+//   return removed;
+// }
+for (let i = 0; i <= faces.length; i++) {
+  faces[i].textContent = "SQL";
+}
+// cubes.addEventListener('mouseOver', (e)=>{
+
+// })
