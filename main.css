@@ -1,0 +1,469 @@
+/* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: "Poppins", sans-serif;
+  background: #0b0d0f;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  color: #38bdf8;
+  transition: 0.3s;
+}
+li {
+  list-style: none;
+}
+
+/* Navigation Bar */
+nav {
+  width: 100%;
+  background: #0b0d0f;
+  padding: 20px 5%;
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-list {
+  display: flex;
+  gap: 35px;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-list li {
+  position: relative;
+}
+
+.nav-list a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cfd3d8;
+  text-decoration: none;
+  padding: 8px 5px;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+/* Hover background + underline slide */
+.nav-list a::before {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #0ea5e9;
+  transition: width 0.3s ease;
+}
+
+.nav-list a:hover {
+  color: #ffffff;
+}
+
+/* nav styling */
+/* NAV container */
+.site-nav {
+  width: 100%;
+  background: #0b0d0f; /* solid dark nav background you requested */
+  padding: 14px 5%;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(6px);
+}
+
+/* nav list alignment */
+.nav-list {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* each top-level item */
+.nav-list li {
+  position: relative;
+}
+
+/* link/button shared styles */
+.nav-list a,
+.nav-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px; /* space between svg and label */
+  padding: 8px 12px;
+  color: #cbd5df;
+  text-decoration: none;
+  font-size: 0.98rem;
+  border-radius: 8px; /* pill-like background on hover */
+  position: relative; /* for underline pseudo element */
+  transition: color 200ms ease, transform 200ms ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* svg sizing inherits currentColor */
+.nav-list .icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  color: #9aa6b0; /* slightly muted icon color */
+}
+
+/* label styling */
+.nav-list .label {
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* hover background pill (smooth) */
+.nav-list li:hover {
+  background: rgba(255, 255, 255, 0.03);
+  transition: background 240ms ease;
+}
+
+/* underline slide animation: create a pseudo-element that expands */
+.nav-list a::before,
+.nav-button::before {
+  content: "";
+  position: absolute;
+  left: 10px; /* align underline offset from left padding */
+  right: 10px; /* allow it to shrink from right */
+  bottom: 6px;
+  height: 2px;
+  background: linear-gradient(90deg, #0ea5e9, #7c3aed); /* gradient underline */
+  transform-origin: left center;
+  transform: scaleX(0); /* hidden by default */
+  transition: transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  border-radius: 2px;
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+/* when hover, slide underline to full width */
+.nav-list a:hover::before,
+.nav-button:hover::before,
+.nav-list a:focus::before,
+.nav-button:focus::before {
+  transform: scaleX(1);
+}
+
+/* ensure focus outline for accessibility */
+.nav-list a:focus,
+.nav-button:focus {
+  outline: 2px solid rgba(14, 165, 233, 0.15);
+  outline-offset: 4px;
+}
+
+/* certificate dropdown base */
+.certificate-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  min-width: 220px;
+  background: #0f1316;
+  border-radius: 10px;
+  padding: 8px 6px;
+  box-shadow: 0 14px 40px rgba(3, 7, 12, 0.6);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 260ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  z-index: 1200;
+}
+
+/* dropdown list items */
+.certificate-dropdown li {
+  list-style: none;
+  margin: 0;
+}
+
+/* anchor inside dropdown */
+.certificate-dropdown li a {
+  display: block;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  color: #d0d6db;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 200ms ease, color 150ms ease;
+}
+
+/* highlight on hover for dropdown items */
+.certificate-dropdown li:hover a,
+.certificate-dropdown li a:focus {
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+}
+
+/* show dropdown on hover for desktop (CSS-only) */
+.nav-item.certificates:hover .certificate-dropdown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 60ms; /* small delay to avoid accidental flicker */
+}
+
+/* responsive: center nav items vertically on small screens but collapse spacing */
+@media (max-width: 700px) {
+  .nav-list {
+    gap: 12px;
+    padding: 0 6px;
+  }
+  .certificate-dropdown {
+    left: auto;
+    right: 0;
+  }
+  .nav-list .label {
+    display: none;
+  } /* hide text labels if you prefer icon-only mobile */
+}
+
+#hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: radial-gradient(circle at center, #0e0f13, #050507);
+  overflow: hidden;
+  color: #fff;
+}
+
+/* Neon Glow Ambient */
+#hero::before {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 200, 255, 0.35), transparent 70%);
+  filter: blur(120px);
+  animation: glowMove 8s infinite alternate;
+}
+
+@keyframes glowMove {
+  from {
+    transform: translate(-150px, -80px);
+  }
+  to {
+    transform: translate(150px, 80px);
+  }
+}
+
+/* Cube Wrapper */
+.cube-container {
+  width: 250px;
+  height: 250px;
+  perspective: 900px;
+}
+
+/* .cube {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: autoRotate 12s linear infinite;
+  position: relative;
+} */
+.cube {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.cube.show {
+  opacity: 1;
+}
+.cube {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  position: relative;
+
+  /* Start invisible */
+  opacity: 0;
+
+  /* Show cube after 2 seconds */
+  animation: autoRotate 12s linear infinite;
+  animation-delay: 2s;
+  transition: opacity 1.2s ease;
+}
+@keyframes showCube {
+  to {
+    opacity: 1;
+  }
+}
+.cube {
+  opacity: 0;
+  animation: autoRotate 12s linear infinite;
+  animation-delay: 2s;
+  transition: opacity 1.5s ease;
+  animation-fill-mode: both;
+}
+.cube {
+  opacity: 0;
+  animation: showCube 1.5s ease forwards, autoRotate 12s linear infinite 2s;
+}
+
+/*  */
+@keyframes autoRotate {
+  from {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+.face {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(0, 200, 255, 0.4);
+  border-radius: 20px;
+  font-size: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+/* Hero Section */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, #0b0d0f, #11151a);
+  perspective: 1000px;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  transform: rotateX(15deg);
+  animation: floatTitle 4s ease-in-out infinite;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-top: 15px;
+  transform: rotateX(10deg);
+}
+
+@keyframes floatTitle {
+  0%,
+  100% {
+    transform: rotateX(15deg) translateY(0);
+  }
+  50% {
+    transform: rotateX(15deg) translateY(-12px);
+  }
+}
+
+.typing {
+  margin-top: 10px;
+  font-size: 1.3rem;
+  border-right: 2px solid #0ea5e9;
+  white-space: nowrap;
+  overflow: hidden;
+  width: fit-content;
+  animation: blink 0.7s infinite;
+}
+
+/* 3D Card Container */
+.projects-section {
+  padding: 80px 5%;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.project-card {
+  background: #11151a;
+  padding: 20px;
+  border-radius: 15px;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateY(0deg);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+}
+
+.project-card:hover {
+  transform: perspective(1000px) rotateY(12deg) translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.project-title {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.project-desc {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* Button Styling */
+.btn-primary {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 12px 25px;
+  background: #0ea5e9;
+  color: #ffffff;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #38bdf8;
+  transform: translateY(-5px);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 30px;
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
