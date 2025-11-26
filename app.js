@@ -128,51 +128,59 @@ let delayBetweenSkills = 1000;
 const text = "Software Developer • Frontend Specialist";
 let index = 0;
 
-function typeText(text, element, callback) {
-  element.textContent = "";
-  let i = 0;
+// function typeText(text, element, callback) {
+//   element.textContent = "";
+//   let i = 0;
 
-  let typer = setInterval(() => {
-    element.textContent += text[i];
-    i++;
-    if (i === text.length) {
-      clearInterval(typer);
-      setTimeout(callback, delayBetweenSkills);
-    }
-  }, typingSpeed);
-}
+//   let typer = setInterval(() => {
+//     element.textContent += text[i];
+//     i++;
+//     if (i === text.length) {
+//       clearInterval(typer);
+//       setTimeout(callback, delayBetweenSkills);
+//     }
+//   }, typingSpeed);
+// }
 
-function startTyping() {
-  let currentFace = faces[faceIndex];
-  let currentSkill = skills[skillIndex];
+// function startTyping() {
+//   let currentFace = faces[faceIndex];
+//   let currentSkill = skills[skillIndex];
 
-  // clear alll faces first
-  // faces.forEach((f) => (f.textContent = ""));
+//   // clear alll faces first
+//   // faces.forEach((f) => (f.textContent = ""));
 
-  // Type on the current face
-  typeText(currentSkill, currentFace, () => {
-    // Move to next skills and face
-    skillIndex = (skillIndex + 1) % skills.length;
-    faceIndex = (faceIndex + 1) % faces.length;
-    faces.textContent = currentSkill;
+//   // Type on the current face
+//   typeText(currentSkill, currentFace, () => {
+//     // Move to next skills and face
+//     skillIndex = (skillIndex + 1) % skills.length;
+//     faceIndex = (faceIndex + 1) % faces.length;
+//     faces.textContent = currentSkill;
 
-    startTyping();
-  });
-}
-// Start animation
-startTyping();
+//     startTyping();
+//   });
+// }
+// // Start animation
+// startTyping();
 
 function typeLetters() {
   typingElement.textContent = text.slice(0, index);
   index++;
-  // let currentSkill = skills[skillIndex];
-  // skillIndex = (skillIndex + 1) % skills.length;
-  // faceIndex = (faceIndex + 1) % faces.length;
-  // faces.textContent = currentSkill;
+  let currentSkill = skills[skillIndex];
+  skillIndex = (skillIndex + 1) % skills.length;
+  faceIndex = (faceIndex + 1) % faces.length;
+  faces.textContent = currentSkill;
 
   if (index <= text.length) {
     setTimeout(typeLetters, 300); // typing speed
   }
 }
+function typingSkills() {
+  let currentSkill = skills[skillIndex];
+  skillIndex = (skillIndex + 1) % skills.length;
+  faceIndex = (faceIndex + 1) % faces.length;
+  faces.textContent = currentSkill;
+  setTimeout(typingSkills, 1000);
+}
 
-setTimeout(typeLetters, 1500); // wait 1.5 sec before typing starts
+setTimeout(typeLetters, 1000); // wait 1.5 sec before typing starts
+setTimeout(typingSkills, 1000);
