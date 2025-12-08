@@ -128,39 +128,6 @@ let delayBetweenSkills = 1000;
 const text = "Software Developer • Frontend Specialist";
 let index = 0;
 
-// function typeText(text, element, callback) {
-//   element.textContent = "";
-//   let i = 0;
-
-//   let typer = setInterval(() => {
-//     element.textContent += text[i];
-//     i++;
-//     if (i === text.length) {
-//       clearInterval(typer);
-//       setTimeout(callback, delayBetweenSkills);
-//     }
-//   }, typingSpeed);
-// }
-
-// function startTyping() {
-//   let currentFace = faces[faceIndex];
-//   let currentSkill = skills[skillIndex];
-
-//   // clear alll faces first
-//   // faces.forEach((f) => (f.textContent = ""));
-
-//   // Type on the current face
-//   typeText(currentSkill, currentFace, () => {
-//     // Move to next skills and face
-//     skillIndex = (skillIndex + 1) % skills.length;
-//     faceIndex = (faceIndex + 1) % faces.length;
-//     faces.textContent = currentSkill;
-
-//     startTyping();
-//   });
-// }
-// // Start animation
-// startTyping();
 
 function typeLetters() {
   typingElement.textContent = text.slice(0, index);
@@ -271,3 +238,11 @@ if (
   card.addEventListener("focus", () => card.classList.add("focused"));
   card.addEventListener("blur", () => card.classList.remove("focused"));
 }
+const track = document.querySelector(".carousel-track");
+const slides = Array.from(track.children);
+
+// Duplicate track content for smooth infinite effect
+slides.forEach(slide => {
+  const clone = slide.cloneNode(true);
+  track.appendChild(clone);
+});

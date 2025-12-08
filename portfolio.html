@@ -47,8 +47,8 @@
 </nav>
 
 <!-- About section -->
-<section id="about-section" aria-labelledby="about-heading">
-  <div class="about-wrap">
+<section id="about about-section" aria-labelledby="about-heading">
+  <div class="about-wrap ">
     <!-- Left: 3D tilting image card -->
     <div class="about-left">
       <div class="tilt-card photo-wrap" tabindex="0" aria-label="Photo of [David Udeji]">
@@ -58,12 +58,11 @@
 
     <!-- Right: content -->
     <div class="about-right">
-      <h2 id="about-heading" class="about-title">About me</h2>
-      <p class="about-tagline">Frontend developer building immersive 3D experiences & interfaces.</p>
+      <h2 id="about-heading" class="about-title ">About me</h2>
+      <p class="about-tagline">Frontend developer building responsive user interfaces.</p>
 
       <p class="about-bio">
-        I build fast, accessible frontends with delightful micro-interactions and 3D visuals.
-        I love turning complex UX into simple, usable products.
+        I build fast, scalable and reliable applications for users. 
       </p>
 
       <ul class="about-chips" aria-hidden="false">
@@ -72,25 +71,9 @@
         <li><strong>1</strong><span>Open Source PRs</span></li>
       </ul>
 
-      <div class="flip-panels">
-        <div class="panel" data-panel="education">
-          <h3>Education</h3>
-          <div class="panel-inner">BSc Computer Science — University X</div>
-        </div>
-
-        <div class="panel" data-panel="experience">
-          <h3>Experience</h3>
-          <div class="panel-inner">Frontend & UI at Company Y — shipped 5 products</div>
-        </div>
-
-        <div class="panel" data-panel="values">
-          <h3>What I value</h3>
-          <div class="panel-inner">Usability, performance, clarity, and empathy</div>
-        </div>
-      </div>
 
       <div class="about-ctas">
-        <a href="/resume.pdf" class="btn btn-primary" download>Download Resume</a>
+      
         <a href="#contact" class="btn btn-secondary">Contact</a>
       </div>
     </div>
@@ -114,14 +97,87 @@
 
 
 <h1 class="hero-text">Hi, I'm David Udeji</h1>
-<h2 class="typing"></h2>
+<h2 class="typing "></h2>
 
 </section>
-  <section id="projects"></section>
+  <section id="projects">
+
+    <div class="carousel-container">
+  <div class="carousel-track">
+
+    <!--  Project Card -->
+    <div class="project-card ">
+      <img src="project1.jpg" alt="Project 1" class="project-img" />
+      <div class="card-content">
+        <h3>Project One</h3>
+        <p>A short description of what this project does.</p>
+        <div class="tech-stack">
+          <img src="react.svg" />
+          <img src="next.svg" />
+          <img src="js.svg" />
+          <img src="css.svg" />
+          <img src="node.svg" />
+        </div>
+        <a href="#" class="view-btn">View Site</a>
+      </div>
+    </div>
+       <div class="project-card ">
+      <img src="project2.jpg" alt="Project 1" class="project-img" />
+      <div class="card-content">
+        <h3>Project Two</h3>
+        <p>A short description of what this project does.</p>
+        <div class="tech-stack">
+          <img src="react.svg" />
+          <img src="next.svg" />
+          <img src="js.svg" />
+          <img src="css.svg" />
+          <img src="node.svg" />
+        </div>
+        <a href="#" class="view-btn">View Site</a>
+      </div>
+    </div>
+ <div class="project-card ">
+      <img src="project3.jpg" alt="Project 1" class="project-img" />
+      <div class="card-content">
+        <h3>Project Three</h3>
+        <p>A short description of what this project does.</p>
+        <div class="tech-stack">
+          <img src="react.svg" />
+          <img src="next.svg" />
+          <img src="js.svg" />
+          <img src="css.svg" />
+          <img src="node.svg" />
+        </div>
+        <a href="#" class="view-btn">View Site</a>
+      </div>
+    </div>
+ <div class="project-card ">
+      <img src="project4.jpg" alt="Project 1" class="project-img" />
+      <div class="card-content">
+        <h3>Project Four</h3>
+        <p>A short description of what this project does.</p>
+        <div class="tech-stack">
+          <img src="react.svg" />
+          <img src="next.svg" />
+          <img src="js.svg" />
+          <img src="css.svg" />
+          <img src="node.svg" />
+        </div>
+        <a href="#" class="view-btn">View Site</a>
+      </div>
+    </div>
+
+ 
+
+  </div>
+</div>
+
+
+  </section>
   <section id="skills"></section>
   <section id="contact"></section>
 
-   <footer aria-label=DavidUdeji&#39;s Social Media Links" class="">
+   <footer aria-label="DavidUdeji&#39;s Social Media Links" class="">
         
 <ul class="">
     <li>
@@ -152,10 +208,10 @@
     </li>
 </ul>
 </footer>
-<!-- include GSAP and ScrollTrigger (place in <head> or before script) -->
+<!-- include GSAP and ScrollTrigger (place in <head> or before script)
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<script src="./jQuery.js"></script>
+<script src="./jQuery.js"></script> -->
 <script src="app.js"></script>
 
 
