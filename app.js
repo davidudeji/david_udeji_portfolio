@@ -1,15 +1,28 @@
-// Certificate functionality - REMOVED (certificates now link to new page)
+// Hamburger Menu Toggle
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const navMenu = document.getElementById("navMenu");
 
-// 3D cube animation - REMOVED (replaced with tech stack cards)
-// Delay the cube reveal
-// setTimeout(() => {
-//   document.querySelector(".cube").classList.add("show");
-// }, 2000);
+hamburgerBtn.addEventListener("click", () => {
+  hamburgerBtn.classList.toggle("active");
+  navMenu.classList.toggle("active");
+});
 
-let mouseX = 0,
-  mouseY = 0;
+// Close menu when a link is clicked
+navMenu.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    hamburgerBtn.classList.remove("active");
+    navMenu.classList.remove("active");
+  });
+});
 
-// Mouse tracking rotation - REMOVED (was for cube)
+// Close menu when clicking outside
+document.addEventListener("click", (e) => {
+  if (!e.target.closest("#navbar")) {
+    hamburgerBtn.classList.remove("active");
+    navMenu.classList.remove("active");
+  }
+});
+
 
 // Typing text
 const typingElement = document.querySelector(".typing");
@@ -65,7 +78,7 @@ gsap.timeline({
 }).to(
   ".about-left",
   {
-    duration: 1,
+    duration: 3,
     x: 0,
     opacity: 1,
     ease: "power2.out",
@@ -74,7 +87,7 @@ gsap.timeline({
 ).to(
   ".about-right",
   {
-    duration: 1,
+    duration: 3,
     opacity: 1,
     ease: "power2.out",
   },
@@ -89,7 +102,7 @@ gsap.timeline({
     markers: false,
   },
 }).to(
-  ".carousel-track",
+  ".projects-grid",
   {
     duration: 1,
     opacity: 1,
@@ -159,36 +172,19 @@ document.addEventListener("DOMContentLoaded", () => {
   panels.forEach((p) => observer.observe(p));
 });
 
-// Tilt card mouse tracking (subtle)
-const card = document.querySelector(".tilt-card");
-if (
-  card &&
-  window.matchMedia("(prefers-reduced-motion: no-preference)").matches
-) {
-  card.addEventListener("mousemove", (e) => {
-    const rect = card.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width; // 0..1
-    const py = (e.clientY - rect.top) / rect.height;
-
-    const rotateY = (px - 0.5) * 18; // max 18deg
-    const rotateX = (0.5 - py) * 12; // max 12deg
-
-    card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateZ(0)`;
-  });
-
-  card.addEventListener("mouseleave", () => {
-    card.style.transform = "";
-  });
-
-  // keyboard focus tilt (accessible)
-  card.addEventListener("focus", () => card.classList.add("focused"));
-  card.addEventListener("blur", () => card.classList.remove("focused"));
-}
-const track = document.querySelector(".carousel-track");
-const slides = Array.from(track.children);
-
-// Duplicate track content for smooth infinite effect
-slides.forEach(slide => {
-  const clone = slide.cloneNode(true);
-  track.appendChild(clone);
-});
+// Animate Projects Grid on scroll into view
+gsap.timeline({
+  scrollTrigger: {
+    trigger: ".projects-grid",
+    start: "top 80%",
+    markers: false,
+  },
+}).to(
+  ".projects-grid",
+  {
+    duration: 1,
+    opacity: 1,
+    ease: "power2.out",
+  },
+  0
+);
