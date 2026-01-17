@@ -6,6 +6,11 @@
     <title>David_Portfolio</title>
     <link rel="stylesheet" href="main.css">
     <!-- <link rel="stylesheet" href="container.css"> -->
+    <!-- GSAP and ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
 
 </head>
@@ -26,19 +31,10 @@
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12h18" stroke="currentColor" stroke-width="1.6"/><path d="M6 8v8" stroke="currentColor" stroke-width="1.6"/></svg>
     </span><span class="label">Skills</span></a></li>
 
-    <!-- Certificates (dropdown) -->
-    <li class="nav-item certificates" role="none">
-      <button class="nav-button" aria-haspopup="true" aria-expanded="false" aria-controls="cert-dropdown">
-        <span class="icon" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l3 6 7 .5-5 4 1.5 7L12 17l-6.5 3.5L7 12 2 8.5 9 8.5 12 2z" stroke="currentColor" stroke-width="1.2"/></svg>
-        </span>
-        <span class="label">Certificates</span>
-      </button>
-
-      <ul id="cert-dropdown" class="certificate-dropdown" role="menu" aria-hidden="true">
-        <!-- JS will inject <li><a> items here -->
-      </ul>
-    </li>
+    <!-- Certificates (new page) -->
+    <li role="none"><a role="menuitem" href="certificates.html"><span class="icon" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l3 6 7 .5-5 4 1.5 7L12 17l-6.5 3.5L7 12 2 8.5 9 8.5 12 2z" stroke="currentColor" stroke-width="1.2"/></svg>
+    </span><span class="label">Certificates</span></a></li>
 
     <li role="none"><a role="menuitem" href="#contacts"><span class="icon" aria-hidden="true">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 8v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8"/><path d="M7 8V6a5 5 0 0 1 10 0v2"/></svg>
@@ -46,25 +42,7 @@
 
   </ul>
 </nav>
-<!-- 
-<div class="loader-wrapper">
-  <span class="loader-letter">G</span>
-  <span class="loader-letter">e</span>
-  <span class="loader-letter">n</span>
-  <span class="loader-letter">e</span>
-  <span class="loader-letter">r</span>
-  <span class="loader-letter">a</span>
-  <span class="loader-letter">t</span>
-  <span class="loader-letter">i</span>
-  <span class="loader-letter">n</span>
-  <span class="loader-letter">g</span>
 
-  <div class="loader"></div>
-</div> -->
-
-
-<!-- About section -->
- <!-- From Uiverse.io by SelfMadeSystem --> 
 
 <section id="about about-section" aria-labelledby="about-heading">
   <div class="about-wrap ">
@@ -108,17 +86,58 @@
 
  
   
- <!-- Hero Section with 3D Cube -->
+ <!-- Hero Section with Tech Stack -->
 <section id="hero" class="hero">
   <h2>Tech Stack</h2>
-<div class="cube-container">
-<div class="cube" id="cube">
-  
-<div class="face front"><span class="typingSkills"></span></div>
-</div>
-</div>
+  <div class="tech-stack-container">
+    <!-- Next.js -->
+    <div class="tech-card">
+      <div class="tech-icon-wrapper">
+        <i class="fab fa-react"></i>
+      </div>
+      <p class="tech-label">Next.js</p>
+    </div>
 
+    <!-- React JS -->
+    <div class="tech-card">
+      <div class="tech-icon-wrapper">
+        <i class="fab fa-react"></i>
+      </div>
+      <p class="tech-label">React JS</p>
+    </div>
 
+    <!-- JavaScript -->
+    <div class="tech-card">
+      <div class="tech-icon-wrapper">
+        <i class="fab fa-js-square"></i>
+      </div>
+      <p class="tech-label">JavaScript</p>
+    </div>
+
+    <!-- TypeScript -->
+    <div class="tech-card">
+      <div class="tech-icon-wrapper">
+        <i class="fab fa-js-square"></i>
+      </div>
+      <p class="tech-label">TypeScript</p>
+    </div>
+
+    <!-- MongoDB -->
+    <div class="tech-card">
+      <div class="tech-icon-wrapper">
+        <i class="fas fa-database"></i>
+      </div>
+      <p class="tech-label">MongoDB</p>
+    </div>
+
+    <!-- Node JS -->
+    <div class="tech-card">
+      <div class="tech-icon-wrapper">
+        <i class="fab fa-node-js"></i>
+      </div>
+      <p class="tech-label">Node JS</p>
+    </div>
+  </div>
 </section>
   <section id="projects">
 
@@ -130,7 +149,7 @@
       <img src="./images/vibe-code-editor.png" alt="Project 1" class="project-img" />
       <div class="card-content">
         <h3>Vibe Code Editor</h3>
-        <p>A short description of what this project does.</p>
+        <p>An intelligent code editor with AI-powered suggestions and real-time collaboration features.</p>
         <div class="tech-stack">
           <img src="react.svg" />
           <img src="next.svg" />
@@ -142,10 +161,10 @@
       </div>
     </div>
        <div class="project-card ">
-      <img src="project2.jpg" alt="Project 1" class="project-img" />
+      <img src="./images/chatbot.png" alt="Project 1" class="project-img" />
       <div class="card-content">
-        <h3>Project Two</h3>
-        <p>A short description of what this project does.</p>
+        <h3>Chatbot</h3>
+        <p>A chatbot with conversation capabilities.</p>
         <div class="tech-stack">
           <img src="react.svg" />
           <img src="next.svg" />
@@ -153,7 +172,7 @@
           <img src="css.svg" />
           <img src="node.svg" />
         </div>
-        <a href="#" class="view-btn">View Site</a>
+        <a href="https://ai-chatbot-roan-omega.vercel.app/" target="_blank" class="view-btn">View Site</a>
       </div>
     </div>
  <div class="project-card ">
@@ -195,9 +214,9 @@
 
   </section>
   <section id="skills"></section>
-  <section id="contact"></section>
+  <section id="contacts"></section>
 
-   <footer aria-label="DavidUdeji&#39;s Social Media Links" class="">
+   <footer id="contacts" aria-label="DavidUdeji's Social Media Links" class="">
         
 <ul class="">
     <li>
