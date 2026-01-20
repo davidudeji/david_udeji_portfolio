@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David_Portfolio</title>
     <link rel="stylesheet" href="main.css">
-    <!-- <link rel="stylesheet" href="container.css"> -->
-    <!-- GSAP and ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <!-- Motion Library for scroll reveal animations -->
+    <script src="https://cdn.jsdelivr.net/npm/motion@10.16.16"></script>
 
 </head>
 <body>
@@ -49,8 +46,8 @@
 </nav>
 
 
-<section id="about about-section" aria-labelledby="about-heading">
-  <div class="about-wrap ">
+<section id="about" class="about-section" aria-labelledby="about-heading">
+  <div class="about-wrap">
     <div class="about-left">
       <div class="profile-frame photo-wrap">
         <div class="glow"></div>
@@ -71,7 +68,7 @@
       <p class="about-tagline">Software developer building responsive user interfaces.</p>
 
       <p class="about-bio">
-        I build fast, scalable and reliable applications for users. 
+      I’m a software developer passionate about solving real-world problems with clean, scalable, and user-focused solutions. I enjoy building modern web applications, learning continuously, and turning ideas into products that work. 
       </p>
 
       <ul class="about-chips" aria-hidden="false">
@@ -282,11 +279,9 @@
     </li>
 </ul>
 </footer>
-<!-- include GSAP and ScrollTrigger (place in <head> or before script)
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<script src="./jQuery.js"></script> -->
 <script src="app.js"></script>
+<!-- Motion Library Animation Controller -->
+<script src="motion-animations.js"></script>
 
 
 </body>

@@ -64,69 +64,6 @@ function typingSkills() {
 setTimeout(typeLetters, 300); // wait 1.5 sec before typing starts
 setTimeout(typingSkills, 800);
 
-// Section
-// GSAP + ScrollTrigger setup
-gsap.registerPlugin(ScrollTrigger);
-
-// Animate About Section on scroll into view
-gsap.timeline({
-  scrollTrigger: {
-    trigger: ".about-wrap",
-    start: "top 80%",
-    markers: false,
-  },
-}).to(
-  ".about-left",
-  {
-    duration: 3,
-    x: 0,
-    opacity: 1,
-    ease: "power2.out",
-  },
-  0
-).to(
-  ".about-right",
-  {
-    duration: 3,
-    opacity: 1,
-    ease: "power2.out",
-  },
-  0
-);
-
-// Animate Project Carousel on scroll into view
-gsap.timeline({
-  scrollTrigger: {
-    trigger: "#projects",
-    start: "top 80%",
-    markers: false,
-  },
-}).to(
-  ".projects-grid",
-  {
-    duration: 1,
-    opacity: 1,
-    ease: "power2.out",
-  },
-  0
-);
-
-// tilt photo with mouse
-const photoWrap = document.getElementById("photoWrap");
-photoWrap.addEventListener("mousemove", (e) => {
-  const rect = photoWrap.getBoundingClientRect();
-  const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 .. 0.5
-  const y = (e.clientY - rect.top) / rect.height - 0.5;
-  const rotateY = x * 14; // ↔
-  const rotateX = -y * 10; // ↕
-  photoWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-});
-photoWrap.addEventListener("mouseleave", () => {
-  photoWrap.style.transform = "";
-});
-
-// Flip panels on scroll — animate from rotateX(90deg) -> rotateX(0deg)
-
 // Add background when scrolling
 const nav = document.getElementById("navbar");
 const about = document.getElementById("about-section");
@@ -140,51 +77,19 @@ window.addEventListener("scroll", () => {
   }
 });
 
-// Slide-in on load + IntersectionObserver for panels
-document.addEventListener("DOMContentLoaded", () => {
-  const wrap = document.querySelector(".about-wrap");
-  // initial hidden (prevent visible jump)
-  wrap.classList.add("preload");
-
-  // small timeout to allow paint, then slide-in (2 ways: onload or when visible)
-  requestAnimationFrame(() => {
-    // If you want the whole section to slide in only when visible, use IO instead of immediate
-    wrap.classList.add("slide-in");
-    wrap.classList.remove("preload");
+// tilt photo with mouse
+const photoWrap = document.getElementById("photoWrap");
+if (photoWrap) {
+  photoWrap.addEventListener("mousemove", (e) => {
+    const rect = photoWrap.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 .. 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    const rotateY = x * 14; // ↔
+    const rotateX = -y * 10; // ↕
+    photoWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
   });
+  photoWrap.addEventListener("mouseleave", () => {
+    photoWrap.style.transform = "";
+  });
+}
 
-  // Panels flip when they enter viewport
-  const panels = document.querySelectorAll(".panel");
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in-view");
-        } else {
-          // If you want panels to flip back when out of view, uncomment:
-          // entry.target.classList.remove('in-view');
-        }
-      });
-    },
-    { threshold: 0.25, rootMargin: "0px 0px -10% 0px" }
-  );
-
-  panels.forEach((p) => observer.observe(p));
-});
-
-// Animate Projects Grid on scroll into view
-gsap.timeline({
-  scrollTrigger: {
-    trigger: ".projects-grid",
-    start: "top 80%",
-    markers: false,
-  },
-}).to(
-  ".projects-grid",
-  {
-    duration: 1,
-    opacity: 1,
-    ease: "power2.out",
-  },
-  0
-);

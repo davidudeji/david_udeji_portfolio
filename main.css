@@ -493,6 +493,7 @@ li {
   width: 100%;
 }
 
+/* Tech card styles with Motion animation support */
 .tech-card {
   background: linear-gradient(145deg, #071232, #0a0c12);
   border-radius: 15px;
@@ -506,6 +507,8 @@ li {
   box-shadow: 0 0 8px rgba(0, 153, 255, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .tech-card:hover {
@@ -634,6 +637,7 @@ li {
 
 @media (max-width: 640px) {
   .about-wrap {
+    grid-template-columns: 1fr;
     padding: 30px 20px;
     gap: 20px;
   }
@@ -646,41 +650,64 @@ img{
 
 .about-left{
   display: flex;
+  flex-direction: column;
   text-align: center;
   align-content: center;
-  margin-bottom: 80px;
-  opacity: 0;
-  transform: translateX(-100%);
+  margin-bottom: 0;
   justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 @media (max-width: 900px) {
   .about-left {
-    margin-bottom: 40px;
+    margin-bottom: 0;
+    order: 1;
   }
 }
 
 @media (max-width: 640px) {
   .about-left {
-    margin-bottom: 30px;
+    margin-bottom: 0;
+    order: 1;
+    gap: 15px;
   }
 }
 
 .hero-text {
   font-weight: 700;
-  position: absolute;
-  top: 500px;
+  position: relative;
+  top: auto;
   letter-spacing: 2px;
-  transform: rotateX(15deg);
-  animation: floatTitle 4s ease-in-out infinite;
+  transform: none;
+  animation: none;
   color: #0099ff;
   z-index: 2;
-  margin-left: 18px;
+  margin-left: 0;
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
 
+.hero-text h2 {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  color: #0099ff;
+}
+
+.hero-text h2:first-child {
+  font-size: 1.8rem;
+}
+
+.hero-text h2:last-child {
+  font-size: 1.5rem;
 }
 .about-left img{
   border-radius: 50%;
-
 }
 
 .profile-frame {
@@ -749,7 +776,7 @@ img{
   width: 95%;
   border-radius: 15px;
   margin: 20px auto;
-  color: black;
+  color: #ffffff;
   overflow: visible;
 }
 
@@ -759,7 +786,7 @@ img{
 /* Right content */
 .about-right { 
   padding: 8px 0;
-  opacity: 0;
+  order: 2;
 }
 .about-title { 
   font-size: 2.2rem; 
@@ -776,11 +803,32 @@ img{
 }
 
 @media (max-width: 900px) {
+  .about-right {
+    order: 2;
+  }
+  
   .about-title {
     font-size: 2rem;
   }
   
   .about-tagline {
+    margin-bottom: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-title {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+  }
+  
+  .about-tagline {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+  }
+  
+  .about-bio {
+    font-size: 0.95rem;
     margin-bottom: 14px;
   }
 }
@@ -926,7 +974,6 @@ img{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-  opacity: 0;
 }
 
 @media (max-width: 1024px) {
@@ -967,6 +1014,8 @@ img{
   display: flex;
   flex-direction: column;
   height: 100%;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .project-card:hover {
