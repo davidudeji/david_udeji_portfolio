@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Library Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-box {
+            width: 200px;
+            height: 200px;
+            background: #3498db;
+            margin: 20px;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        .test-container {
+            min-height: 300vh;
+        }
+        .debug-log {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Motion Library Test</h1>
+    
+    <div class="debug-log" id="debugLog">
+        Loading...
+    </div>
+    
+    <div class="test-container">
+        <div class="test-box"></div>
+        <p>Scroll down to trigger animation</p>
+        <div style="height: 300px; background: white; margin: 20px; padding: 20px; border-radius: 8px;">
+            This box should animate when it comes into view
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/motion@10.16.16"></script>
+    <script>
+        const debugLog = document.getElementById('debugLog');
+        let logMessages = [];
+
+        function log(message) {
+            console.log(message);
+            logMessages.push(new Date().toLocaleTimeString() + ' - ' + message);
+            debugLog.innerHTML = logMessages.join('<br>');
+        }
+
+        log('Page loaded');
+        log('Motion library typeof: ' + typeof motion);
+        log('Motion library available: ' + (typeof motion !== 'undefined'));
+
+        // Try to access Motion library
+        if (typeof motion !== 'undefined') {
+            log('✓ Motion library is available!');
+            log('Motion.animate available: ' + (typeof motion.animate !== 'undefined'));
+        } else {
+            log('✗ Motion library NOT loaded');
+        }
+
+        // Test animation
+        const testBox = document.querySelector('.test-box');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    log('Element in view! Attempting animation...');
+                    
+                    if (typeof motion !== 'undefined' && typeof motion.animate === 'function') {
+                        try {
+                            log('Calling motion.animate()...');
+                            motion.animate(
+                                testBox,
+                                { opacity: 1, x: 0 },
+                                { duration: 1, easing: 'ease-in-out' }
+                            );
+                            log('✓ Animation started');
+                        } catch (error) {
+                            log('✗ Animation error: ' + error.message);
+                        }
+                    } else {
+                        log('✗ motion.animate not available');
+                        testBox.style.opacity = '1';
+                        testBox.style.transform = 'none';
+                    }
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(testBox);
+        log('Observer started');
+    </script>
+</body>
+</html>

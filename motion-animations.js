@@ -1,15 +1,19 @@
 /**
- * Motion Library - Scroll Reveal Animations
- * Using motion.dev for smooth, performant scroll-triggered animations
+ * Motion Library - Scroll Reveal Animations with CSS fallback
+ * Using motion.dev for smooth animations with pure CSS fallback
  * Respects prefers-reduced-motion accessibility setting
  */
+
+console.log('Motion library available:', typeof motion !== 'undefined');
 
 // Check if user prefers reduced motion
 const prefersReducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
 ).matches;
 
-// Helper function to animate elements on scroll
+console.log('Prefers reduced motion:', prefersReducedMotion);
+
+// Helper function to animate elements on scroll using CSS transitions
 function createScrollReveal(elements, options = {}) {
   const {
     delay = 0,
@@ -18,7 +22,8 @@ function createScrollReveal(elements, options = {}) {
     distance = 30,
   } = options;
 
-  // Return early if reduced motion is preferred
+  console.log('createScrollReveal called with', elements.length, 'elements, duration:', duration);
+
   if (prefersReducedMotion) {
     elements.forEach((el) => {
       el.style.opacity = "1";
@@ -27,33 +32,40 @@ function createScrollReveal(elements, options = {}) {
     return;
   }
 
-  // Use Motion's scroll-triggered animations
   elements.forEach((el, index) => {
     const elementDelay = delay + index * staggerDelay;
 
-    // Initial state
+    // Initial state - hidden
     el.style.opacity = "0";
     el.style.transform = `translateY(${distance}px)`;
     el.style.willChange = "opacity, transform";
+    el.style.transition = `opacity ${duration}s ease-out ${elementDelay / 1000}s, transform ${duration}s ease-out ${elementDelay / 1000}s`;
 
     // Detect when element enters viewport
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Trigger animation with Motion API
-            motion.animate(
-              el,
-              {
-                opacity: 1,
-                y: 0, // translateY
-              },
-              {
-                duration: duration,
-                delay: elementDelay / 1000, // Convert ms to seconds
-                easing: [0.22, 1, 0.36, 1], // Custom cubic-bezier easing
-              }
-            );
+          if (entry.isIntersecting && !entry.target.dataset.animationTriggered) {
+            entry.target.dataset.animationTriggered = "true";
+            
+            // Use Motion library if available, otherwise use CSS
+            if (typeof motion !== 'undefined' && motion.animate) {
+              console.log('Using Motion library for animation');
+              motion.animate(
+                el,
+                { opacity: 1, y: 0 },
+                {
+                  duration: duration,
+                  delay: elementDelay / 1000,
+                  easing: [0.22, 1, 0.36, 1],
+                }
+              );
+            } else {
+              console.log('Using CSS transition for animation');
+              // CSS transition fallback
+              el.style.opacity = "1";
+              el.style.transform = "translateY(0)";
+            }
 
             // Stop observing after animation triggers
             observer.unobserve(el);
@@ -62,7 +74,7 @@ function createScrollReveal(elements, options = {}) {
       },
       {
         threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px", // Trigger slightly before fully visible
+        rootMargin: "0px 0px -50px 0px",
       }
     );
 
@@ -78,6 +90,8 @@ function createScaleReveal(elements, options = {}) {
     duration = 0.6,
   } = options;
 
+  console.log('createScaleReveal called with', elements.length, 'elements, duration:', duration);
+
   if (prefersReducedMotion) {
     elements.forEach((el) => {
       el.style.opacity = "1";
@@ -89,28 +103,35 @@ function createScaleReveal(elements, options = {}) {
   elements.forEach((el, index) => {
     const elementDelay = delay + index * staggerDelay;
 
-    // Initial state - scaled down slightly
+    // Initial state - scaled down
     el.style.opacity = "0";
     el.style.transform = "scale(0.95) translateY(20px)";
     el.style.willChange = "opacity, transform";
+    el.style.transition = `opacity ${duration}s ease-out ${elementDelay / 1000}s, transform ${duration}s ease-out ${elementDelay / 1000}s`;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            motion.animate(
-              el,
-              {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-              },
-              {
-                duration: duration,
-                delay: elementDelay / 1000,
-                easing: [0.22, 1, 0.36, 1],
-              }
-            );
+          if (entry.isIntersecting && !entry.target.dataset.animationTriggered) {
+            entry.target.dataset.animationTriggered = "true";
+            
+            if (typeof motion !== 'undefined' && motion.animate) {
+              console.log('Using Motion library for scale animation');
+              motion.animate(
+                el,
+                { opacity: 1, scale: 1, y: 0 },
+                {
+                  duration: duration,
+                  delay: elementDelay / 1000,
+                  easing: [0.22, 1, 0.36, 1],
+                }
+              );
+            } else {
+              console.log('Using CSS transition for scale animation');
+              // CSS transition fallback
+              el.style.opacity = "1";
+              el.style.transform = "scale(1) translateY(0)";
+            }
 
             observer.unobserve(el);
           }
@@ -133,6 +154,8 @@ function createFadeReveal(elements, options = {}) {
     duration = 0.8,
   } = options;
 
+  console.log('createFadeReveal called with', elements.length, 'elements, duration:', duration);
+
   if (prefersReducedMotion) {
     elements.forEach((el) => {
       el.style.opacity = "1";
@@ -143,22 +166,30 @@ function createFadeReveal(elements, options = {}) {
   elements.forEach((el) => {
     el.style.opacity = "0";
     el.style.willChange = "opacity";
+    el.style.transition = `opacity ${duration}s ease-out ${delay / 1000}s`;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            motion.animate(
-              el,
-              {
-                opacity: 1,
-              },
-              {
-                duration: duration,
-                delay: delay / 1000,
-                easing: [0.25, 0.46, 0.45, 0.94],
-              }
-            );
+          if (entry.isIntersecting && !entry.target.dataset.animationTriggered) {
+            entry.target.dataset.animationTriggered = "true";
+            
+            if (typeof motion !== 'undefined' && motion.animate) {
+              console.log('Using Motion library for fade animation');
+              motion.animate(
+                el,
+                { opacity: 1 },
+                {
+                  duration: duration,
+                  delay: delay / 1000,
+                  easing: [0.25, 0.46, 0.45, 0.94],
+                }
+              );
+            } else {
+              console.log('Using CSS transition for fade animation');
+              // CSS transition fallback
+              el.style.opacity = "1";
+            }
 
             observer.unobserve(el);
           }
@@ -176,75 +207,98 @@ function createFadeReveal(elements, options = {}) {
 
 // Initialize animations on DOM ready
 document.addEventListener("DOMContentLoaded", () => {
+  console.log('DOM Content Loaded - Initializing animations');
+
   // Tech Stack Cards - Staggered scale reveal
   const techCards = document.querySelectorAll(".tech-card");
   if (techCards.length > 0) {
+    console.log('Tech cards found:', techCards.length);
     createScaleReveal(techCards, {
       delay: 0,
       staggerDelay: 60,
-      duration: 0.5,
+      duration: 0.8,
     });
   }
 
   // About Section - Image and text with different timings
   const aboutLeft = document.querySelector(".about-left");
   if (aboutLeft) {
-    // Keep visible by default, animate on intersection
-    aboutLeft.style.opacity = "1";
-    aboutLeft.style.transform = "none";
+    console.log('About left found - setting up animation');
+    // Set initial hidden state for animation
+    aboutLeft.style.opacity = "0";
+    aboutLeft.style.transform = "translateX(-30px)";
+    aboutLeft.style.willChange = "opacity, transform";
+    aboutLeft.style.transition = "opacity 1.2s ease-out, transform 1.2s ease-out";
 
     const aboutLeftObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !prefersReducedMotion && !entry.target.dataset.animated) {
-            entry.target.dataset.animated = "true";
-            motion.animate(
-              aboutLeft,
-              {
-                opacity: 1,
-                x: 0,
-              },
-              {
-                duration: 0.7,
-                delay: 0,
-                easing: [0.22, 1, 0.36, 1],
-              }
-            );
+          if (entry.isIntersecting && !entry.target.dataset.animationTriggered) {
+            entry.target.dataset.animationTriggered = "true";
+            console.log('Animating aboutLeft');
+            
+            if (typeof motion !== 'undefined' && motion.animate) {
+              console.log('Using Motion library for aboutLeft');
+              motion.animate(
+                aboutLeft,
+                { opacity: 1, x: 0 },
+                {
+                  duration: 1.2,
+                  delay: 0,
+                  easing: [0.22, 1, 0.36, 1],
+                }
+              );
+            } else {
+              console.log('Using CSS for aboutLeft');
+              // CSS fallback
+              aboutLeft.style.opacity = "1";
+              aboutLeft.style.transform = "translateX(0)";
+            }
           }
         });
       },
-      { threshold: 0.2, rootMargin: "0px 0px -100px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
     );
     aboutLeftObserver.observe(aboutLeft);
   }
 
   const aboutRight = document.querySelector(".about-right");
   if (aboutRight) {
-    // Keep visible by default, animate on intersection
-    aboutRight.style.opacity = "1";
-    aboutRight.style.transform = "none";
+    console.log('About right found - setting up animation');
+    // Set initial hidden state for animation
+    aboutRight.style.opacity = "0";
+    aboutRight.style.transform = "translateX(30px)";
+    aboutRight.style.willChange = "opacity, transform";
+    aboutRight.style.transition = "opacity 1.2s ease-out 0.3s, transform 1.2s ease-out 0.3s";
 
     const aboutRightObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !prefersReducedMotion && !entry.target.dataset.animated) {
-            entry.target.dataset.animated = "true";
-            motion.animate(
-              aboutRight,
-              {
-                opacity: 1,
-                x: 0,
-              },
-              {
-                duration: 0.7,
-                delay: 0.15,
-                easing: [0.22, 1, 0.36, 1],
-              }
-            );
+          if (entry.isIntersecting && !entry.target.dataset.animationTriggered) {
+            entry.target.dataset.animationTriggered = "true";
+            console.log('Animating aboutRight');
+            
+            if (typeof motion !== 'undefined' && motion.animate) {
+              console.log('Using Motion library for aboutRight');
+              motion.animate(
+                aboutRight,
+                { opacity: 1, x: 0 },
+                {
+                  duration: 1.2,
+                  delay: 0.3,
+                  easing: [0.22, 1, 0.36, 1],
+                }
+              );
+            } else {
+              console.log('Using CSS for aboutRight');
+              // CSS fallback
+              aboutRight.style.opacity = "1";
+              aboutRight.style.transform = "translateX(0)";
+            }
           }
         });
       },
-      { threshold: 0.2, rootMargin: "0px 0px -100px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
     );
     aboutRightObserver.observe(aboutRight);
   }
@@ -252,10 +306,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Project Cards - Staggered scale reveal
   const projectCards = document.querySelectorAll(".project-card");
   if (projectCards.length > 0) {
+    console.log('Project cards found:', projectCards.length);
     createScaleReveal(projectCards, {
       delay: 0,
       staggerDelay: 80,
-      duration: 0.6,
+      duration: 0.9,
     });
   }
 
@@ -271,16 +326,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // About Title - Fade in with delay
   const aboutTitle = document.querySelector(".about-title");
   if (aboutTitle) {
+    console.log('About title found - setting up animation');
     aboutTitle.style.opacity = "0";
+    aboutTitle.style.transition = "opacity 0.6s ease-out";
+    
     const titleObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !prefersReducedMotion) {
-            motion.animate(
-              aboutTitle,
-              { opacity: 1 },
-              { duration: 0.6, easing: [0.25, 0.46, 0.45, 0.94] }
-            );
+          if (entry.isIntersecting && !entry.target.dataset.animationTriggered && !prefersReducedMotion) {
+            entry.target.dataset.animationTriggered = "true";
+            console.log('Animating aboutTitle');
+            
+            if (typeof motion !== 'undefined' && motion.animate) {
+              console.log('Using Motion library for aboutTitle');
+              motion.animate(
+                aboutTitle,
+                { opacity: 1 },
+                { duration: 0.6, easing: [0.25, 0.46, 0.45, 0.94] }
+              );
+            } else {
+              console.log('Using CSS for aboutTitle');
+              aboutTitle.style.opacity = "1";
+            }
+            
             titleObserver.unobserve(entry.target);
           }
         });
@@ -293,11 +361,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Footer Links - Staggered fade
   const footerLinks = document.querySelectorAll("footer ul li");
   if (footerLinks.length > 0) {
+    console.log('Footer links found:', footerLinks.length);
     createFadeReveal(Array.from(footerLinks), {
       delay: 0,
       duration: 0.5,
     });
   }
+
+  console.log('All animations initialized');
 });
 
 // Listener for reduced motion preference changes (for live updates)
